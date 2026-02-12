@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class="heading">My Top 10 Movies</h1>
+  <p class="description">These are my all-time favourite movies.</p>
+
+{% for movie in movies %}
+
+  <div class="card">
+
+```
+<!-- FRONT CARD -->
+<div class="front"
+     style="background-image: url('{{ movie.img_url }}');">
+    <p class="large">{{ movie.ranking }}</p>
+</div>
+
+<!-- BACK CARD -->
+<div class="back">
+  <div>
+
+    <div class="title">
+      {{ movie.title }}
+      <span class="release_date">({{ movie.year }})</span>
+    </div>
+
+    <div class="rating">
+        <label>{{ movie.rating }}</label>
+        <i class="fas fa-star star"></i>
+    </div>
+
+    <p class="review">
+      "{{ movie.review }}"
+    </p>
+
+    <p class="overview">
+      {{ movie.description }}
+    </p>
+
+    <!-- preserved buttons (inactive for now) -->
+    <a href="{{ url_for('editing', movie_id=movie.id) }}" class="button">Update</a>
+
+    <form action="{{ url_for('deleting', movie_id=movie.id) }}" method="POST" style="display:inline;">
+    {{ form.hidden_tag() }}
+    <button type="submit" class="button delete-button">Delete</button>
+</form>
+
+
+  </div>
+</div>
+```
+
+  </div>
+  {% endfor %}
+</div>
+
+<div class="container text-center add">
+  <a href="{{url_for('adding')}}" class="button">Add Movie</a>
+</div>
+
+{% endblock %}
